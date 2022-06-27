@@ -71,7 +71,7 @@ var fight = function(enemy) {
 
     // repeat and execute as long as the enemy-robot is alive
 
-    while(playerInfo.health > 0 && enemyHealth > 0) {
+    while(playerInfo.health > 0 && enemy.health > 0) {
 
     // ask player if they'd like to fight or skip using fightOrSkip function
 
@@ -87,35 +87,35 @@ var fight = function(enemy) {
 
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack); 
 
-    enemyHealth = Math.max(0, enemyHealth - damage);
+    enemy.health = Math.max(0, enemy.health - damage);
 
         console.log(
 
-            playerInfo.name + " attacked " + enemyName + " . " + enemyName + " now has " + enemyHealth + " health remaining."
+            playerInfo.name + " attacked " + enemy.name + " . " + enemy.name + " now has " + enemy.health + " health remaining."
         );
 
     // check enemy's health
 
-    if (enemyHealth <= 0) {
+    if (enemy.health <= 0) {
 
-        window.alert(enemyName + " has died! ");
+        window.alert(enemy.name + " has died! ");
 
         break;
     }
         else {
 
-            window.alert(enemyName + " still has " + enemyHealth + " health left. ");
+            window.alert(enemy.name + " still has " + enemy.health + " health left. ");
         }
 
     // remove player's health by subtracting the amount set in the enemyAttack variable
 
-    var damage = randomNumber(enemyAttack - 3, enemyAttack);
+    var damage = randomNumber(enemy.attack - 3, enemy.attack);
 
     playerInfo.health = Math.max(0, playerInfo.health - damage);
 
         console.log(
 
-            enemyName + " attacked " + playerInfo.name + " . " + playerInfo.name + " now has " + playerInfo.health + " health remaining. "
+            enemy.name + " attacked " + playerInfo.name + " . " + playerInfo.name + " now has " + playerInfo.health + " health remaining. "
         );
 
     // check player's health
@@ -139,6 +139,8 @@ var fight = function(enemy) {
 var startGame = function() {
 
     enemyHealth = randomNumber(40, 60);
+
+
 
     // reset player stats
 
@@ -165,12 +167,12 @@ for(var i = 0; i < enemyInfo.length; i++) {
         // debugger;
 
     // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
-    
+   
         fight(pickedEnemyObj);
 
         // if player is still alive and we're not at the last enemy in the array
 
-        if (playerInfo.health > 0 && i < enemyNames.length - 1) {
+        if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
 
             // ask if player wants to use the store before the next round
 
@@ -240,29 +242,28 @@ var shop = function() {
 
     var shopOptionPrompt = window.prompt(
 
-        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 1 for REFILL, 2 for UPGRADE, or 3 for LEAVE."
     );
+
+    shopOptionPrompt = parseInt(shopOptionPrompt);
 
     //  use switch to carry out action
 
     switch (shopOptionPrompt) {
 
-        case "REFILL": 
-        case "refill":
+    case 1:
 
         playerInfo.refillHealth();
 
    break;
 
-    case "UPGRADE": 
-    case "upgrade":
+    case 2:
 
         playerInfo.upgradeAttack();
 
     break;
 
-    case "LEAVE": //new case
-    case "leave":
+    case 3:
 
         window.alert("Leaving the store");
 
@@ -391,3 +392,4 @@ var playerInfo = {
     //  start the game when the page loads
 
 startGame();
+
